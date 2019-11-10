@@ -1,0 +1,25 @@
+<ion-header>
+    <dl-toolbar titulo="Engenharia de Limpeza"></dl-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-list-header>
+            <ion-label id="titulo_pagina">{{tituloPagina}}</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let item of listaAvaliacao">
+            <ion-label (click)="editaAvaliacao(item)">
+                <h3>{{item.cliente}} - {{item.posto}}</h3>
+                <p>{{item.last_modified | date: 'dd/MM/yyyy'}} - {{item.cidade}}</p>
+            </ion-label>
+            <ion-icon name="clipboard" slot="end" (click)="listaRelatorio(item)"></ion-icon>
+        </ion-item>
+    </ion-list>
+
+    <ion-fab *ngIf="showFab"  vertical="bottom" horizontal="end" slot="fixed" (click)="novaAvaliacao()">
+        <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>
+<copyright-footer></copyright-footer>
