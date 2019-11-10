@@ -1,0 +1,28 @@
+<ion-header>
+    <dl-toolbar titulo="Clientes"></dl-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <lista-elemento-avaliacao 
+        icon = "contact" 
+        header = "Ativos"
+        elemento = "cliente" 
+        useSearchBar = "true"
+        (itemClicked) = "exibePosto($event)">
+    </lista-elemento-avaliacao>
+
+    <!-- <lista-elemento-avaliacao 
+        icon = "contact" 
+        header = "Inativos"
+        elemento = "cliente" 
+        onlyDeleted = "true" 
+        (itemClicked) = "habilita($event)">
+    </lista-elemento-avaliacao> -->
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="novoCliente()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>
+<copyright-footer></copyright-footer>
