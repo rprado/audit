@@ -1,6 +1,5 @@
-import { RegisterService } from 'src/app/services/register.service';
-import { NavController, ToastController, LoadingController, Events } from '@ionic/angular';
 import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { ObjectHelper } from 'src/app/helpers/object-helper';
 import { OverlayService } from 'src/app/services/overlay.service';
 
