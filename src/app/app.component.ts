@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { RegisterService } from './services/register.service';
-import { NavController } from '@ionic/angular';
+import { NavController, MenuController } from '@ionic/angular';
+import { ObjectHelper } from './helpers/object-helper';
+import { Menu } from './shared/dao/menu';
+import { VersionHelper } from './helpers/version-helper';
 
 @Component({
     selector: 'app-root',
@@ -8,33 +10,47 @@ import { NavController } from '@ionic/angular';
     styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-    public appPages = [
-        {
-            title: 'Home',
-            url: '/home',
-            icon: 'home'
-        },
-        {
-            title: 'List',
-            url: '/list',
-            icon: 'list'
-        }
-    ];
+    categoria;
+    paginas;
+    versao;
 
     constructor(
-        private register: RegisterService,
-        private nav: NavController
+        private menuCtrl: MenuController,
+        private nav: NavController,
+        private menu: Menu
     ) {
         this.initializeApp();
+        this.versao = VersionHelper.getLast();
     }
 
     initializeApp() {
-        if (!this.register.created()) {
+        if (this.firstAccess()) {
             this.nav.navigateRoot('login');
         } else {
             this.loadMenu();
         }
     }
 
-    loadMenu() {}
+    firstAccess(): boolean {
+        const a = ObjectHelper.remember('user');
+        return a === null;
+    }
+
+    async loadMenu() {
+        this.paginas = await this.menu.menuList();
+    }
+
+    browseTo(link) {
+        this.menuCtrl.toggle();
+        this.nav.navigateForward(link);
+    }
+
+    verify(categoria) {
+        if (this.categoria !== categoria) {
+            this.categoria = categoria;
+            return true;
+        }
+        return false;
+    }
+
 }
