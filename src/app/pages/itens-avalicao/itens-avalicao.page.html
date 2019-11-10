@@ -1,0 +1,18 @@
+<ion-header>
+    <dl-toolbar titulo="Itens da Avaliação"></dl-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <lista-elemento-avaliacao 
+        icon="checkmark-circle-outline"
+        useSearchBar = "true"
+        elemento="item">
+    </lista-elemento-avaliacao>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="criaElemento()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>
+<copyright-footer></copyright-footer>
