@@ -1,0 +1,34 @@
+.bicolor {
+  --background: repeating-linear-gradient(#eeeeee, #eeeeee 69.9%, #121b45 30.1%, #121b45 100%);
+}
+
+.logo-div {
+  margin: 0 auto;
+  margin-top: 5%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.logo-div img {
+  width: 60%;
+}
+
+ion-button {
+  position: absolute;
+  top: 71%;
+}
+
+ion-item {
+  position: absolute;
+  top: 40%;
+  padding-bottom: 10px;
+  --ion-background-color: rgba(10, 10, 10, 0.25) !important;
+}
+
+.central {
+  left: 0;
+  right: 0;
+  width: 80%;
+  margin: 0 auto;
+  max-width: 700px;
+}

@@ -1,40 +1,40 @@
 import { Component } from '@angular/core';
-
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { RegisterService } from './services/register.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  public appPages = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+    public appPages = [
+        {
+            title: 'Home',
+            url: '/home',
+            icon: 'home'
+        },
+        {
+            title: 'List',
+            url: '/list',
+            icon: 'list'
+        }
+    ];
+
+    constructor(
+        private register: RegisterService,
+        private nav: NavController
+    ) {
+        this.initializeApp();
     }
-  ];
 
-  constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
-  ) {
-    this.initializeApp();
-  }
+    initializeApp() {
+        if (!this.register.created()) {
+            this.nav.navigateRoot('login');
+        } else {
+            this.loadMenu();
+        }
+    }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
-  }
+    loadMenu() {}
 }

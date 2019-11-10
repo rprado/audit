@@ -1,0 +1,20 @@
+<ion-content class="bicolor" padding>
+
+    <div id="container">
+        <div class="logo-div">
+            <img src="assets/logo/logo_trans.png">
+        </div>
+
+        <ion-item class="central">
+            <ion-label position="stacked">Código de Acesso</ion-label>
+            <ion-input (keypress)="send($event.keyCode)" [(ngModel)]="code" id="access-code"></ion-input>
+        </ion-item>
+
+        <ion-button class="central" expand="full" (click)="login()" color="light" id="submit">Enviar</ion-button>
+    </div>
+
+</ion-content>
+
+<ion-footer>
+    <copyright-footer></copyright-footer>
+</ion-footer>
