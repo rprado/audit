@@ -1,0 +1,29 @@
+<ion-toolbar>
+
+    <ion-buttons *ngIf="!hideMenu" slot="start">
+        <ion-menu-button>
+            <ion-icon name="menu"></ion-icon>
+        </ion-menu-button>
+    </ion-buttons>
+
+    <ion-buttons *ngIf="back" slot="start">
+        <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title *ngIf="!subtitulo; else comSubtitulo">
+        {{titulo}}
+    </ion-title>
+
+    <ng-template #comSubtitulo>
+        <ion-title>
+            <div class="page-title">HEADING</div>
+            <div class="page-sub-title">Sub Heading</div>
+        </ion-title>
+    </ng-template>
+
+    <ion-buttons *ngIf="!hideLogo" slot="end">
+        <ion-button>
+            <ion-img (click)="sendClick()" src="/assets/logo/logo_sem_texto_trans_42x42.png"></ion-img>
+        </ion-button>
+    </ion-buttons>
+</ion-toolbar>
