@@ -1,0 +1,59 @@
+<ion-header>
+    <dl-toolbar titulo="Lista de Postos" hideMenu="true" back="true"></dl-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ion-card>
+        <ion-card-header>
+            <ion-card-subtitle>{{data}}</ion-card-subtitle>
+            <ion-card-title>{{nomeEmpresa}}</ion-card-title>
+        </ion-card-header>
+    </ion-card>
+
+    <ion-list>
+        <ion-list-header *ngIf="lista">Ativos</ion-list-header>
+        <ion-item-sliding *ngFor="let posto of lista">
+            <ion-item (click)="itensPosto(posto.id)">
+                <ion-icon name="business" slot="start"></ion-icon>
+                <ion-label>{{posto.nome}}</ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+                <ion-item-option expandable color="secondary"
+                    (click)="editar(posto)">
+                    <ion-icon slot="icon-only" name="clipboard"></ion-icon>
+                </ion-item-option>
+                <ion-item-option (click)="remover(posto)" expandable
+                    color="danger">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+
+    <!-- <ion-list>
+        <ion-list-header *ngIf="inativos">Inativos</ion-list-header>
+        <ion-item-sliding *ngFor="let posto of inativos">
+            <ion-item (click)="itensPosto(posto.remote_id)">
+                <ion-icon name="business" slot="start"></ion-icon>
+                <ion-label>{{posto.nome}}</ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+                <ion-item-option expandable color="secondary"
+                    (click)="editar(posto)">
+                    <ion-icon slot="icon-only" name="clipboard"></ion-icon>
+                </ion-item-option>
+                <ion-item-option (click)="remover(posto)" expandable
+                    color="danger">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list> -->
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="criar()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>
+<copyright-footer></copyright-footer>

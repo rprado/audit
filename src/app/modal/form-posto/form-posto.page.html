@@ -1,0 +1,31 @@
+<ion-header>
+    <dl-toolbar titulo="Criar Posto" hideMenu="true" back="true" (logoClicked)="close()"></dl-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">Nome</ion-label>
+            <ion-input [(ngModel)]="nome" (ionChange)="validate()"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Cidade</ion-label>
+            <ion-input [(ngModel)]="cidade" (ionChange)="validate()"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Contato</ion-label>
+            <ion-input [(ngModel)]="contato" (ionChange)="validate()"></ion-input>
+        </ion-item>
+    </ion-list>
+
+    <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+        <ion-fab-button (click)="close()" color="danger">
+            <ion-icon name="close-circle-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="save()" [disabled]=form_invalido>
+            <ion-icon name="checkmark"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>
