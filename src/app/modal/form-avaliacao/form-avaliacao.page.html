@@ -1,0 +1,50 @@
+<ion-header>
+    <dl-toolbar titulo="Avaliar" hideMenu="true" (logoClicked)="close()"></dl-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-card>
+        <ion-card-header>
+            <ion-card-subtitle><b>{{posto}}</b></ion-card-subtitle>
+            <!-- <ion-card-subtitle>{{setor}}</ion-card-subtitle> -->
+            <p>{{data | date: 'dd/MM/yyyy'}}</p>
+        </ion-card-header>
+    </ion-card>
+
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">{{item}}: {{nota}} </ion-label>
+            <ion-range min=0 max=4 snaps=true pin=true [(ngModel)]="nota"></ion-range>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Observações</ion-label>
+            <ion-textarea [(ngModel)]="observacao"></ion-textarea>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Recomendações</ion-label>
+            <ion-textarea [(ngModel)]="recomendacao"></ion-textarea>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="display_image">
+        <ion-list-header>Registro Visual</ion-list-header>
+        <ion-card><img [src]="image" (error)="display_image = false" /></ion-card>
+    </ion-list>
+
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+        <ion-fab-button (click)="tirarFoto()">
+            <ion-icon name="camera"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+        <ion-fab-button (click)="close()" color="danger">
+            <ion-icon name="close-circle-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="close()" [disabled]=form_invalido>
+            <ion-icon name="checkmark"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <br><br><br>
+</ion-content>

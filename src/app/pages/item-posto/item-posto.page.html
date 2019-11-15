@@ -1,0 +1,39 @@
+<ion-header>
+    <dl-toolbar titulo="Itens do Posto" hideMenu="true" back="true"></dl-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ion-card>
+        <ion-card-header>
+            <ion-card-subtitle padding-left><b>{{nomePosto}}</b></ion-card-subtitle>
+            <ion-item>
+                <ion-label>{{contato}}</ion-label>
+                <ion-icon slot="end" name="mail" (click)="mailForm()"></ion-icon>
+            </ion-item>
+        </ion-card-header>
+    </ion-card>
+    <ion-searchbar animated (ionInput)="filtrar($event.target.value)" mode="ios" placeholder="Buscar"></ion-searchbar>
+    <ion-list>
+        <ion-item-divider color="primary" style="padding-right: 15px">
+            <ion-icon name="copy" slot="end" (click)="copiaItensPosto()"></ion-icon>
+            <ion-label>
+                Marque os itens aplicáveis a este posto. ({{itemCount}})
+            </ion-label>
+        </ion-item-divider>
+        <div *ngFor="let element of elementList">
+            <ion-item>
+                <ion-label>{{element.nome}}</ion-label>
+                <ion-checkbox value="{{element.id}}" slot="end"
+                    (ionChange)="setItem(element)"
+                    [(ngModel)]="element.isChecked"></ion-checkbox>
+            </ion-item>
+        </div>
+    </ion-list>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="criaItem()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <br><br><br>
+    <copyright-footer></copyright-footer>
+</ion-content>

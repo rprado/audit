@@ -14,7 +14,7 @@ export class Menu extends Firestore<any> {
     }
 
     async menuList() {
-        const menu = this.db.collection('menu', res => res).valueChanges({idField: 'id'});
+        const menu = this.db.collection('menu').valueChanges({idField: 'id'});
         return new Promise(resolve => {
             menu.subscribe(lista => {
                 const menuItem = this.db.collection('menu_item', res => res).valueChanges();

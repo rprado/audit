@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import { LoginPage } from './login.page';
+import { FormCopiaItensPage } from './form-copia-itens.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
-    {
-        path: '',
-        component: LoginPage
-    }
+    { path: '', component: FormCopiaItensPage }
 ];
 
 @NgModule({
@@ -16,6 +12,6 @@ const routes: Routes = [
         SharedModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [LoginPage]
+    declarations: []
 })
-export class LoginPageModule { }
+export class FormCopiaItensPageModule { }

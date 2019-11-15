@@ -1,6 +1,5 @@
-// import { DbProvider } from 'src/app/dao/db';
+import { Posto } from './../../dao/posto';
 import { Component, Output, EventEmitter } from '@angular/core';
-// import { Posto } from 'src/app/dao/table/posto';
 
 @Component({
     selector: 'seletor-posto',
@@ -9,23 +8,18 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class SeletorPostoComponent {
     @Output() postoSelecionado;
-    // posto: Posto;
-    listaPosto;
+    listaCliente;
     cliente;
 
     constructor(
-        // private db: DbProvider
+        private posto: Posto
     ) {
         this.postoSelecionado = new EventEmitter();
-        // this.posto = new Posto(db);
         this.load();
     }
 
-    load() {
-        // this.posto.get_nome_posto().
-        // subscribe(res => {
-        //     this.listaPosto = res;
-        // });
+    async load() {
+        this.listaCliente = await this.posto.listWithClient();
     }
 
     itemSelected(idPosto) {

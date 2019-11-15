@@ -1,4 +1,4 @@
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { Cliente } from './../../shared/dao/cliente';
 import { Posto } from './../../shared/dao/posto';
 import { Component, OnInit } from '@angular/core';
@@ -21,8 +21,9 @@ export class ListaPostosPage implements OnInit {
     constructor(
         private posto: Posto,
         private cliente: Cliente,
+        private nav: NavController,
         private route: ActivatedRoute,
-        private modal: ModalController
+        private modal: ModalController,
     ) { }
 
     ngOnInit() {
@@ -46,7 +47,9 @@ export class ListaPostosPage implements OnInit {
         });
     }
 
-    itensPosto(id: string) {}
+    itensPosto(id: string) {
+        this.nav.navigateForward('item-posto/' + id);
+    }
 
     editar(posto) {}
 

@@ -1,0 +1,19 @@
+<ion-header>
+    <dl-toolbar titulo="Email do Cliente" hideMenu="true" (logoClicked)="close()"></dl-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <lista-elemento-avaliacao icon="mail" elemento="email" campoExtra="email" idPosto="{{id_posto}}"></lista-elemento-avaliacao>
+
+    <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+        <ion-fab-button (click)="close()" color="danger">
+            <ion-icon name="close-circle-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="novoEmail()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+</ion-content>

@@ -1,15 +1,12 @@
 import { AlertController } from '@ionic/angular';
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { AlertOptions, AlertInput } from '@ionic/core';
-// import { Categoria } from 'src/app/dao/table/categoria';
-// import { Subcategoria } from 'src/app/dao/table/subcategoria';
-// import { Setor } from 'src/app/dao/table/setor';
-// import { Email } from 'src/app/dao/table/email';
 import { ElementoAvaliacaoService } from './elemento-avaliacao.service';
 import { Firestore } from '../../dao/firestore';
 import { EventEmitter } from '@angular/core';
 
 import { Item } from '../../dao/item';
+import { Email } from '../../dao/email';
 import { Cliente } from './../../dao/cliente';
 import { OverlayService } from 'src/app/services/overlay.service';
 
@@ -30,11 +27,11 @@ export class ListaElementoAvaliacaoComponent implements OnInit {
 
     lista;
     listaElementos;
-    conditions: any = {};
     subject: Firestore<any>;
 
     constructor(
         private item: Item,
+        private email: Email,
         private cliente: Cliente,
         private alert: AlertController,
         private overlay: OverlayService,
@@ -44,14 +41,11 @@ export class ListaElementoAvaliacaoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.conditions.deleted = this.onlyDeleted ? 1 : 0;
-
         if (this.elemento === 'item') {
             this.subject = this.item;
         }
         if (this.elemento === 'email') {
-            // this.subject = new Email(this.db, this.api);
-            this.conditions.id_posto = this.idPosto;
+            this.subject = this.email;
         }
         if (this.elemento === 'cliente') {
             this.subject = this.cliente;

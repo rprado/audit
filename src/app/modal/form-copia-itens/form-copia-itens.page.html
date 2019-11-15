@@ -1,0 +1,21 @@
+<ion-header>
+    <dl-toolbar titulo="Copiar Itens de Avaliação" hideMenu="true" (logoClicked)="close()"></dl-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <ion-list>
+        <ion-list-header>
+            Por gentileza, selecione o posto a partir do qual os itens de avaliação serão copiados.
+        </ion-list-header>
+    </ion-list>
+
+    <seletor-posto (postoSelecionado)="selecionaPosto($event)"></seletor-posto>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="close()">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+</ion-content>
