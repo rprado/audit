@@ -17,8 +17,8 @@ export class Avaliacao extends Firestore<any> {
     async lista() {
         const data = [];
         const posto = await this.getAllAsArray('posto');
-        const aval = await this.getAllAsArray('avaliacao');
         const cliente = await this.getAllAsArray('cliente');
+        const aval = await this.getAllAsArray('avaliacao', ref => ref.orderBy('data', 'desc'));
 
         aval.forEach(av => {
             const p = posto.find(x => x.id === av.id_posto);

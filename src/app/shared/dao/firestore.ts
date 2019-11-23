@@ -38,7 +38,7 @@ export abstract class Firestore<T extends {id: string}> {
         return this.collection.doc<T>(item.id).delete();
     }
 
-    protected getAllAsArray(doc): Promise<any[]> {
-        return new Promise(resolve => { this.db.collection(doc).valueChanges().subscribe((x: any[]) => resolve(x)); });
+    protected getAllAsArray(col: string, queryFn?: QueryFn): Promise<any[]> {
+        return new Promise(resolve => { this.db.collection(col, queryFn).valueChanges().subscribe((x: any[]) => resolve(x)); });
     }
 }
