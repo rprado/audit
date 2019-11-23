@@ -14,4 +14,22 @@ export class Avaliacao extends Firestore<any> {
         this.setCollection('avaliacao');
     }
 
+    async lista() {
+        const data = [];
+        const posto = await this.getAllAsArray('posto');
+        const aval = await this.getAllAsArray('avaliacao');
+        const cliente = await this.getAllAsArray('cliente');
+
+        aval.forEach(av => {
+            const p = posto.find(x => x.id === av.id_posto);
+            p.id_avaliacao = av.id;
+            p.data = av.data;
+
+            const c = cliente.find(x => x.id === p.id_cliente);
+            p.cliente = c.nome;
+            data.push(p);
+        });
+        return data;
+    }
+
 }

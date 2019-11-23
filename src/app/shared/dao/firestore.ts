@@ -1,5 +1,4 @@
 import { AngularFirestoreCollection, AngularFirestore, QueryFn } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 
 export abstract class Firestore<T extends {id: string}> {
 
@@ -39,4 +38,7 @@ export abstract class Firestore<T extends {id: string}> {
         return this.collection.doc<T>(item.id).delete();
     }
 
+    protected getAllAsArray(doc): Promise<any[]> {
+        return new Promise(resolve => { this.db.collection(doc).valueChanges().subscribe((x: any[]) => resolve(x)); });
+    }
 }
