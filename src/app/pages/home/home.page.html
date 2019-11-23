@@ -9,8 +9,8 @@
         </ion-list-header>
         <ion-item *ngFor="let item of listaAvaliacao">
             <ion-label (click)="editaAvaliacao(item)">
-                <h3>{{item.cliente}} - {{item.posto}}</h3>
-                <p>{{item.last_modified | date: 'dd/MM/yyyy'}} - {{item.cidade}}</p>
+                <h3>{{item.cliente}} - {{item.nome}}</h3>
+                <p>{{item.data | date: 'dd/MM/yyyy'}} - {{item.cidade}}</p>
             </ion-label>
             <ion-icon name="clipboard" slot="end" (click)="listaRelatorio(item)"></ion-icon>
         </ion-item>

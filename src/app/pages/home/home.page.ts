@@ -1,4 +1,7 @@
+import { Avaliacao } from './../../shared/dao/avaliacao';
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
     selector: 'app-home',
@@ -6,11 +9,27 @@ import { Component } from '@angular/core';
     styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+    id;
     showFab = false;
     tituloPagina;
     listaAvaliacao = [];
 
-    constructor() { }
+    constructor(
+        private route: ActivatedRoute,
+        private avaliacao: Avaliacao,
+        private nav: NavController
+    ) { }
+
+    ionViewWillEnter() {
+        this.id = parseInt(this.route.snapshot.paramMap.get('id_cliente'), 10);
+        this.tituloPagina = this.id > 0 ? 'Histórico de Visitas' : 'Avaliações Recentes';
+        this.id = this.id ? this.id : 0; this.showFab = this.id === 0;
+        this.load();
+    }
+
+    private async load() {
+        this.listaAvaliacao = await this.avaliacao.lista();
+    }
 
     editaAvaliacao(item) {
 
@@ -21,6 +40,6 @@ export class HomePage {
     }
 
     novaAvaliacao() {
-
+        this.nav.navigateForward('avaliacao');
     }
 }
