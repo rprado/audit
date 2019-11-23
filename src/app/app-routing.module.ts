@@ -10,6 +10,7 @@ const routes: Routes = [
     { path: 'posto/:id', loadChildren: './pages/lista-postos/lista-postos.module#ListaPostosPageModule' },
     { path: 'item-posto/:id', loadChildren: './pages/item-posto/item-posto.module#ItemPostoPageModule' },
     { path: 'avaliacao', loadChildren: './pages/avaliacao-posto/avaliacao-posto.module#AvaliacaoPostoPageModule' },
+    { path: 'avaliacao/:id_posto', loadChildren: './pages/avaliacao/avaliacao.module#AvaliacaoPageModule' },
 ];
 
 @NgModule({

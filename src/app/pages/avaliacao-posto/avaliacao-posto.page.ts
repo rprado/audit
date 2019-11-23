@@ -1,5 +1,6 @@
 import { Posto } from './../../shared/dao/posto';
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
     selector: 'app-avaliacao-posto',
@@ -10,22 +11,17 @@ export class AvaliacaoPostoPage implements OnInit {
     listaCliente;
 
     constructor(
-        private posto: Posto
+        private posto: Posto,
+        private nav: NavController
     ) { }
 
-    ngOnInit() {
-        this.load();
-    }
+    ngOnInit() { this.load(); }
 
     private async load() {
         this.listaCliente = await this.posto.listWithClient();
     }
 
-    novoPosto(cliente) {
-
-    }
-
     go(postoId) {
-
+        this.nav.navigateForward('avaliacao/' + postoId);
     }
 }
