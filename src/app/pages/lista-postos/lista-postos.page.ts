@@ -1,4 +1,5 @@
-import { ModalController, NavController } from '@ionic/angular';
+import { OverlayService } from './../../services/overlay.service';
+import { ModalController, NavController, IonItemSliding } from '@ionic/angular';
 import { Cliente } from './../../shared/dao/cliente';
 import { Posto } from './../../shared/dao/posto';
 import { Component, OnInit } from '@angular/core';
@@ -24,6 +25,7 @@ export class ListaPostosPage implements OnInit {
         private nav: NavController,
         private route: ActivatedRoute,
         private modal: ModalController,
+        private overlay: OverlayService
     ) { }
 
     ngOnInit() {
@@ -34,9 +36,9 @@ export class ListaPostosPage implements OnInit {
 
     private async loadList() {
         this.posto.getByClientId(this.clienteId)
-        .subscribe(lista => {
-            this.lista = lista;
-        });
+            .subscribe(lista => {
+                this.lista = lista;
+            });
     }
 
     private async dadosCliente() {
@@ -51,9 +53,33 @@ export class ListaPostosPage implements OnInit {
         this.nav.navigateForward('item-posto/' + id);
     }
 
-    editar(posto) {}
+    private async update(posto) {
+        const loader = await this.overlay.loading();
+        this.posto.update(posto).then(() => loader.dismiss());
+    }
 
-    remover(posto) {}
+    async editar(posto, item: IonItemSliding) {
+        const dialog = await this.modal.create({
+            component: FormPostoPage,
+            componentProps: { posto }
+        });
+        dialog.onDidDismiss().then(resp => {
+            item.close();
+            this.update(resp.data);
+        });
+        dialog.present();
+    }
+
+    remover(posto, item: IonItemSliding) {
+        const msg = { title: 'Cuidado...', content: 'Deseja, realmente, remover este posto?' };
+        this.overlay.confirmDelete(msg).then(del => {
+            if (del) {
+                this.posto.delete(posto).
+                then(() => this.overlay.toast({ message: 'Posto removido com sucesso' }));
+            }
+            item.close();
+        });
+    }
 
     async criar() {
         const dialog = await this.modal.create({

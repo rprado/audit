@@ -12,17 +12,17 @@
 
     <ion-list>
         <ion-list-header *ngIf="lista">Ativos</ion-list-header>
-        <ion-item-sliding *ngFor="let posto of lista">
+        <ion-item-sliding *ngFor="let posto of lista" #item>
             <ion-item (click)="itensPosto(posto.id)">
                 <ion-icon name="business" slot="start"></ion-icon>
                 <ion-label>{{posto.nome}}</ion-label>
             </ion-item>
             <ion-item-options side="end">
                 <ion-item-option expandable color="secondary"
-                    (click)="editar(posto)">
+                    (click)="editar(posto, item)">
                     <ion-icon slot="icon-only" name="clipboard"></ion-icon>
                 </ion-item-option>
-                <ion-item-option (click)="remover(posto)" expandable
+                <ion-item-option (click)="remover(posto, item)" expandable
                     color="danger">
                     <ion-icon slot="icon-only" name="trash"></ion-icon>
                 </ion-item-option>

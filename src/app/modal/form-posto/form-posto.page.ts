@@ -30,6 +30,7 @@ export class FormPostoPage implements OnInit {
             this.cidade = posto.cidade;
             this.contato = posto.contato;
             this.id_cliente = posto.id_cliente;
+            this.validate();
         }
     }
 
