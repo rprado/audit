@@ -32,7 +32,10 @@ export class HomePage {
     }
 
     editaAvaliacao(item) {
-
+        const ip = item.id;
+        const ia = item.id_avaliacao;
+        const dt = item.data.substr(0, 10);
+        this.nav.navigateForward('avaliacao/' + ip + '/' + ia + '/' + dt);
     }
 
     listaRelatorio(item) {

@@ -1,3 +1,4 @@
+import { ObjectHelper } from 'src/app/helpers/object-helper';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Firestore } from './firestore';
@@ -27,7 +28,7 @@ export class Avaliacao extends Firestore<any> {
 
             const c = cliente.find(x => x.id === p.id_cliente);
             p.cliente = c.nome;
-            data.push(p);
+            data.push(ObjectHelper.copy(p));
         });
         return data;
     }

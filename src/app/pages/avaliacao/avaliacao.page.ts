@@ -45,9 +45,15 @@ export class AvaliacaoPage implements OnInit {
     }
 
     private loadList(id, ida = null) {
-        this.itemPosto.getById(id).subscribe(itens => {
-            this.elementList = itens;
-        });
+        if (ida) {
+            this.avalNota.getById(ida).subscribe(itens => {
+                this.elementList = itens;
+            });
+        } else {
+            this.itemPosto.getById(id).subscribe(itens => {
+                this.elementList = itens;
+            });
+        }
     }
 
     private async setNome(id) {
@@ -76,8 +82,23 @@ export class AvaliacaoPage implements OnInit {
     }
 
     salvar() {
-        const aval: any = {id_posto: this.id, data: DateHelper.today(), sent: 0};
         const lista = ArrayHelper.clone(this.elementList);
+
+        if (this.ida) {
+            this.update(lista);
+        } else {
+            this.create(lista);
+        }
+    }
+
+    private update(lista) {
+        lista.forEach(item => {
+            this.avalNota.update(item);
+        });
+    }
+
+    private create(lista: any[]) {
+        const aval: any = {id_posto: this.id, data: DateHelper.now(), sent: 0};
         const insertTime = DateHelper.now();
         this.aval.create(aval);
 
