@@ -1,0 +1,25 @@
+<ion-header>
+    <dl-toolbar titulo="Engenharia da Limpeza" hideMenu="true" back="true"></dl-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-list-header>
+            <ion-label>Geração de Relatórios</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let item of listaAvaliacao">
+            <ion-label (click)="visualizaRelatorio(item)">
+                <h3>{{item.cliente}} - {{item.nome}}</h3>
+                <p>{{item.data | date: 'dd/MM/yyyy'}} - {{item.cidade}}</p>
+            </ion-label>
+            <ion-icon 
+                slot="end" 
+                name="paper-plane" 
+                color="{{item.sent ? 'success' : 'medium'}}"
+                (click)="enviaRelatorio(item)">
+            </ion-icon>
+        </ion-item>
+    </ion-list>
+</ion-content>
+
+<copyright-footer></copyright-footer>
