@@ -13,8 +13,14 @@
     <seletor-posto (postoSelecionado)="selecionaPosto($event)"></seletor-posto>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button (click)="close()">
+        <ion-fab-button (click)="close()" [disabled]="disableCopy">
             <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+        <ion-fab-button (click)="cancel()" color="danger">
+            <ion-icon name="close-circle-outline"></ion-icon>
         </ion-fab-button>
     </ion-fab>
 

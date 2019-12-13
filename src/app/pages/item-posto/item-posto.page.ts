@@ -40,7 +40,7 @@ export class ItemPostoPage implements OnInit {
     async mailForm() {
         const dialog = await this.modal.create({
             component: FormEmailClientePage,
-            componentProps: {id_posto: this.idPosto}
+            componentProps: { id_posto: this.idPosto }
         });
         dialog.present();
     }
@@ -57,10 +57,12 @@ export class ItemPostoPage implements OnInit {
         });
         dialog.present();
         dialog.onDidDismiss().
-        then(data => this.marcaItensCopiados(data));
+            then(data => this.marcaItensCopiados(data));
     }
 
     async marcaItensCopiados(obj) {
+        if (! obj.data.idPosto) { return; }
+
         this.itemPosto.getById(obj.data.idPosto).subscribe(itens => {
             itens.forEach((item: any) => {
                 this.elementList.forEach(element => {
