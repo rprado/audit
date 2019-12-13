@@ -65,6 +65,7 @@ export class AvaliacaoPage implements OnInit {
 
     async openForm(element) {
         this.selectedElement = element;
+        element.nota = isNaN(element.nota) ? 0 : element.nota;
         const dialog = await this.modal.create({
             component: FormAvaliacaoPage,
             componentProps: { element, posto: this.nomePosto, id_posto: this.id, avaliacao: this.ida }
