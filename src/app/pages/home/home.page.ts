@@ -21,14 +21,14 @@ export class HomePage {
     ) { }
 
     ionViewWillEnter() {
-        this.id = parseInt(this.route.snapshot.paramMap.get('id_cliente'), 10);
-        this.tituloPagina = this.id > 0 ? 'Histórico de Visitas' : 'Avaliações Recentes';
+        this.id = this.route.snapshot.paramMap.get('id_cliente');
+        this.tituloPagina = this.id ? 'Histórico de Visitas' : 'Avaliações Recentes';
         this.id = this.id ? this.id : 0; this.showFab = this.id === 0;
         this.load();
     }
 
     private async load() {
-        this.listaAvaliacao = await this.avaliacao.lista();
+        this.listaAvaliacao = await this.avaliacao.lista(this.id);
     }
 
     editaAvaliacao(item) {
@@ -39,7 +39,8 @@ export class HomePage {
     }
 
     listaRelatorio(item) {
-
+        const ic = item.id_cliente;
+        this.nav.navigateForward('lista-relatorios/' + ic);
     }
 
     novaAvaliacao() {
