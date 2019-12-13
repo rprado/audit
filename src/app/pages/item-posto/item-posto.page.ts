@@ -63,9 +63,11 @@ export class ItemPostoPage implements OnInit {
     async marcaItensCopiados(obj) {
         this.itemPosto.getById(obj.data.idPosto).subscribe(itens => {
             itens.forEach((item: any) => {
-                item.id_posto = this.idPosto;
-                delete item.id;
-                this.itemPosto.create(item);
+                this.elementList.forEach(element => {
+                    if (element.id === item.id_item) {
+                        element.isChecked = true;
+                    }
+                });
             });
         });
     }
@@ -79,12 +81,6 @@ export class ItemPostoPage implements OnInit {
         } else {
             this.itemPosto.delete(item);
         }
-    }
-
-    private inListByObjId(item) {
-        return this.elementList.filter(
-            x => x.id === item.id
-        ).length;
     }
 
     criaItem() {

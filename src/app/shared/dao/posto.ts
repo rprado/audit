@@ -38,10 +38,25 @@ export class Posto extends Firestore<any> {
                         });
                         return item;
                     });
+                    console.log(v);
+                    v.sort(this.compare);
                     resolve(this.groupByClient(v));
                 });
             });
         });
+    }
+
+    private compare(a, b) {
+        const nomeA = a.cli.toUpperCase();
+        const nomeB = b.cli.toUpperCase();
+
+        let comparison = 0;
+        if (nomeA > nomeB) {
+            comparison = 1;
+        } else if (nomeA < nomeB) {
+            comparison = -1;
+        }
+        return comparison;
     }
 
     private groupByClient(v) {
