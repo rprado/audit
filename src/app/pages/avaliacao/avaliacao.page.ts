@@ -110,7 +110,7 @@ export class AvaliacaoPage implements OnInit {
             item.last_modified = insertTime;
             this.avalNota.create(item);
         });
-        this.nav.navigateForward('avaliacao');
+        this.nav.navigateForward('home');
     }
 
     randGrades() {

@@ -19,6 +19,7 @@ export class AvaliacaoNota extends Firestore<any> {
      * @param ida: string - O id da avaliacao
      */
     getById(ida: string) {
-        return this.db.collection('avaliacao_nota', ref => ref.where('id_avaliacao', '==', ida)).valueChanges();
+        return this.db.collection('avaliacao_nota', ref =>
+        ref.where('id_avaliacao', '==', ida).orderBy('nome')).valueChanges();
     }
 }

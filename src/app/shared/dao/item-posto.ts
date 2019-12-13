@@ -40,6 +40,7 @@ export class ItemPosto extends Firestore<any> {
      * @param id: string - O id do posto
      */
     getById(id: string) {
-        return this.db.collection('item_posto', ref => ref.where('id_posto', '==', id)).valueChanges();
+        return this.db.collection('item_posto', ref =>
+        ref.where('id_posto', '==', id).orderBy('nome')).valueChanges();
     }
 }
