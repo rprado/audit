@@ -1,0 +1,8 @@
+{
+  "appId": "com.consulimp.audit",
+  "appName": "Audit",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}

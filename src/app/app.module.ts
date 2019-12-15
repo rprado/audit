@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { Config } from './helpers/config';
 import { SharedModule } from './shared/shared.module';
 
@@ -21,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
         AppRoutingModule,
         IonicModule.forRoot(),
         AngularFireAuthModule,
+        AngularFireStorageModule,
         AngularFirestoreModule.enablePersistence(),
         AngularFireModule.initializeApp(Config.firebaseConfig)
     ],

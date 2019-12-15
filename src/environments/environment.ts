@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: false,
     test: false,
-    server_url: 'http://localhost/consulimp/'
+    production: false,
+    server_url: 'https://app.dentalbit.com.br/'
 };
 
 /*
