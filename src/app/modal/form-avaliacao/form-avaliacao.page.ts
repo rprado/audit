@@ -1,11 +1,12 @@
+import { PhotoService } from './../../services/photo.service';
 import { DateHelper } from 'src/app/helpers/date-helper';
-// import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { ModalController, NavParams, IonContent } from '@ionic/angular';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 // import { ApiService } from 'src/app/services/api.service';
 
-// const { Camera } = Plugins;
+const { Camera } = Plugins;
 
 
 @Component({
@@ -15,14 +16,17 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class FormAvaliacaoPage implements OnInit {
     @ViewChild(IonContent, null) content: IonContent;
-    display_image = false;
-    form_invalido = false;
+    @ViewChild('uploadBtn', null) uploadBtn: ElementRef;
+
+    displayImage = false;
+    formInvalido = false;
     recomendacao;
     observacao;
     avaliacao;
-    nova_foto;
-    id_posto;
-    id_item;
+    photoName;
+    novaFoto;
+    idPosto;
+    idItem;
     element;
     image;
     posto;
@@ -36,15 +40,15 @@ export class FormAvaliacaoPage implements OnInit {
         private sanitizer: DomSanitizer,
         private modal: ModalController,
         private navParams: NavParams,
-        // private api: ApiService
-    ) { }
+        private photo: PhotoService
+    ) { photo.init('evidencia'); }
 
     ngOnInit() {
         this.element = this.navParams.get('element');
         this.avaliacao = this.navParams.get('avaliacao');
-        this.id_posto = this.navParams.get('id_posto');
+        this.idPosto = this.navParams.get('id_posto');
         this.posto = this.navParams.get('posto');
-        this.id_item = this.element.id_item;
+        this.idItem = this.element.id_item;
 
         this.recomendacao = this.element.recomendacao;
         this.observacao = this.element.observacao;
@@ -56,10 +60,10 @@ export class FormAvaliacaoPage implements OnInit {
 
     exibeImagem() {
         if (this.avaliacao) {
-            this.display_image = true;
-            let arq = this.id_posto + '_';
+            this.displayImage = true;
+            let arq = this.idPosto + '_';
             arq += this.avaliacao + '_';
-            arq += this.id_item;
+            arq += this.idItem;
             // const image_path = this.api.base_url(`assets/img/grades/${arq}.jpg`);
             // this.image = this.sanitizer.bypassSecurityTrustUrl(image_path);
         }
@@ -69,25 +73,22 @@ export class FormAvaliacaoPage implements OnInit {
         const resp: any = { nota: this.nota };
         resp.recomendacao = this.recomendacao;
         resp.observacao = this.observacao;
-        if (this.nova_foto) {
+        if (this.novaFoto) {
             resp.image = this.base;
         }
         this.modal.dismiss(resp);
     }
 
     async tirarFoto() {
-        // const result = await Camera.getPhoto({
-        //     quality: 80,
-        //     correctOrientation: true,
-        //     source: CameraSource.Camera,
-        //     resultType: CameraResultType.Base64
-        // });
+        const result = await Camera.getPhoto({
+            resultType: CameraResultType.Uri
+        });
 
         // if (result) {
         //     this.base = result.base64String;
         //     this.image = 'data:image/jpeg;base64,' + this.base;
-        //     this.display_image = true;
-        //     this.nova_foto = true;
+        //     this.displayImage = true;
+        //     this.novaFoto = true;
         //     setTimeout(() => {
         //         this.scrollToBottom();
         //     }, 300);
@@ -109,6 +110,20 @@ export class FormAvaliacaoPage implements OnInit {
 
     scrollToBottom() {
         this.content.scrollToBottom(500);
+    }
+
+    selecionaFoto() {
+        if (this.uploadBtn !== null) {
+            this.uploadBtn.nativeElement.click();
+        }
+    }
+
+    uploadFile(fileList: FileList) {
+        if (fileList.length) {
+            this.novaFoto = true;
+            this.photo.uploadFile(fileList, 'evidencia')
+            .then(resp => this.base = resp);
+        }
     }
 
 }
