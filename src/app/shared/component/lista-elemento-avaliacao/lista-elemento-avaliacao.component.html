@@ -7,7 +7,7 @@
     </ion-list-header>
     <ion-row>
         <ion-col *ngFor="let elemento of lista" size="12" size-md="6">
-            <ion-item-sliding>
+            <ion-item-sliding #item>
                 <ion-item (click)="elementClick(elemento)">
                     <ion-icon name="{{icon}}" slot="start"></ion-icon>
                     <ion-label>
@@ -16,10 +16,10 @@
                     </ion-label>
                 </ion-item>
                 <ion-item-options side="end">
-                    <ion-item-option expandable color="secondary" (click)="editar(elemento)">
+                    <ion-item-option expandable color="secondary" (click)="editar(elemento, item)">
                         <ion-icon slot="icon-only" name="clipboard"></ion-icon>
                     </ion-item-option>
-                    <ion-item-option (click)="remover(elemento)" expandable color="danger">
+                    <ion-item-option (click)="remover(elemento, item)" expandable color="danger">
                         <ion-icon slot="icon-only" name="trash"></ion-icon>
                     </ion-item-option>
                 </ion-item-options>

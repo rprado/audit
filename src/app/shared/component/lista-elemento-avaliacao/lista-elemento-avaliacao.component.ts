@@ -1,4 +1,4 @@
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonItemSliding } from '@ionic/angular';
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { AlertOptions, AlertInput } from '@ionic/core';
 import { ElementoAvaliacaoService } from './elemento-avaliacao.service';
@@ -70,7 +70,9 @@ export class ListaElementoAvaliacaoComponent implements OnInit {
         this.subject.create(data).then(() => loader.dismiss());
     }
 
-    async editar(elemento) {
+    async editar(elemento, ionItem: IonItemSliding) {
+        ionItem.close();
+
         const inputList: AlertInput[] = [{
             type: 'text',
             name: 'nome',
@@ -108,9 +110,15 @@ export class ListaElementoAvaliacaoComponent implements OnInit {
         this.subject.update(item).then(() => loader.dismiss());
     }
 
-    async remover(item) {
-        const loader = await this.overlay.loading();
-        this.subject.delete(item).then(() => loader.dismiss());
+    async remover(obj, item: IonItemSliding) {
+        const msg = { title: 'Cuidado...', content: 'Deseja, realmente, remover este item?' };
+        this.overlay.confirmDelete(msg).then(del => {
+            if (del) {
+                this.subject.delete(obj).
+                    then(() => this.overlay.toast({ message: 'Item removido com sucesso' }));
+            }
+            item.close();
+        });
     }
 
     async reabilitar(data) {

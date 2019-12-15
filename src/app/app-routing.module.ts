@@ -15,6 +15,10 @@ const routes: Routes = [
     { path: 'avaliacao/:id_posto/:id_avaliacao/:data', loadChildren: './pages/avaliacao/avaliacao.module#AvaliacaoPageModule' },
 
     { path: 'lista-visitas/:id_cliente', loadChildren: './pages/home/home.module#HomePageModule' },
+    { path: 'lista-relatorios/:id_cliente', loadChildren: './pages/lista-relatorios/lista-relatorios.module#ListaRelatoriosPageModule' },
+    { path: 'relatorios', loadChildren: './pages/relatorios/relatorios.module#RelatoriosPageModule' },
+    { path: 'lista-visitas', loadChildren: './pages/lista-visitas/lista-visitas.module#ListaVisitasPageModule' },
+    { path: 'lista-visitas/:id_cliente', loadChildren: './pages/home/home.module#HomePageModule' },
 ];
 
 @NgModule({
