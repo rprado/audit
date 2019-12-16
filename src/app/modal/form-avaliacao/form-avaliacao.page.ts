@@ -1,10 +1,10 @@
+import { OverlayService } from './../../services/overlay.service';
 import { PhotoService } from './../../services/photo.service';
 import { DateHelper } from 'src/app/helpers/date-helper';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { ModalController, NavParams, IonContent } from '@ionic/angular';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-// import { ApiService } from 'src/app/services/api.service';
 
 const { Camera } = Plugins;
 
@@ -38,9 +38,10 @@ export class FormAvaliacaoPage implements OnInit {
 
     constructor(
         private sanitizer: DomSanitizer,
+        private overlay: OverlayService,
         private modal: ModalController,
         private navParams: NavParams,
-        private photo: PhotoService
+        private photo: PhotoService,
     ) { photo.init('evidencia'); }
 
     ngOnInit() {
@@ -59,13 +60,10 @@ export class FormAvaliacaoPage implements OnInit {
     }
 
     exibeImagem() {
-        if (this.avaliacao) {
+        if (this.element.image && this.element.image.length > 0) {
+            this.image = this.element.image;
+            this.base = this.element.image;
             this.displayImage = true;
-            let arq = this.idPosto + '_';
-            arq += this.avaliacao + '_';
-            arq += this.idItem;
-            // const image_path = this.api.base_url(`assets/img/grades/${arq}.jpg`);
-            // this.image = this.sanitizer.bypassSecurityTrustUrl(image_path);
         }
     }
 
@@ -73,8 +71,8 @@ export class FormAvaliacaoPage implements OnInit {
         const resp: any = { nota: this.nota };
         resp.recomendacao = this.recomendacao;
         resp.observacao = this.observacao;
-        if (this.novaFoto) {
-            resp.image = this.base;
+        if (this.image && this.image.length > 0) {
+            resp.image = this.image;
         }
         this.modal.dismiss(resp);
     }
@@ -118,11 +116,24 @@ export class FormAvaliacaoPage implements OnInit {
         }
     }
 
-    uploadFile(fileList: FileList) {
+    async uploadFile(fileList: FileList) {
         if (fileList.length) {
+            const loader = await this.overlay.loading();
             this.novaFoto = true;
             this.photo.uploadFile(fileList, 'evidencia')
-            .then(resp => this.base = resp);
+            .then(resp => {
+                const uploadedFileUrl = resp.fileRef.getDownloadURL();
+                uploadedFileUrl.subscribe(url => {
+                    this.displayImage = true;
+                    this.image = url;
+                    this.base = url;
+
+                    setTimeout(() => {
+                        this.scrollToBottom();
+                        loader.dismiss();
+                    }, 1500);
+                });
+            });
         }
     }
 

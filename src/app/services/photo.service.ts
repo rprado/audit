@@ -11,6 +11,11 @@ export interface MyData {
     size: number;
 }
 
+export interface FileData {
+    fileName: string;
+    fileRef: any;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -29,7 +34,6 @@ export class PhotoService {
     images: Observable<MyData[]>;
 
     // File details
-    fileName: string;
     fileSize = 0;
     loader;
 
@@ -49,29 +53,22 @@ export class PhotoService {
         return this.imageCollection.valueChanges();
     }
 
-    async uploadFile(fileList: FileList, folder: string) {
-        this.loader = await this.overlay.loading();
+     uploadFile(fileList: FileList, folder: string): Promise<FileData> {
         const file = fileList.item(0);
-        this.fileName = new Date().getTime() + '_' + file.name;
+        const fileName = new Date().getTime() + '_' + file.name;
 
-        // The storage path
-        const path = `${folder}/${this.fileName}`;
-
-        // Totally optional metadata
-        const customMetadata = { app: 'Audit Image Upload' };
-
-        // The main task
-        this.task = this.storage.upload(path, file, { customMetadata });
-
-        // Get file progress percentage
+        const path = `${folder}/${fileName}`;
+        this.task = this.storage.upload(path, file);
         this.percentage = this.task.percentageChanges();
-        this.percentage.subscribe(x => {
-            if (x === 100) {
-                const fileRef = this.storage.ref(path);
-                this.saveStorageFileURL(fileRef, this.fileName);
-            }
+
+        return new Promise(resolve => {
+            this.percentage.subscribe(x => {
+                if (x === 100) {
+                    const fileRef = this.storage.ref(path);
+                    resolve({fileName, fileRef});
+                }
+            });
         });
-        return this.fileName;
     }
 
     private saveStorageFileURL(fileRef, file: string) {

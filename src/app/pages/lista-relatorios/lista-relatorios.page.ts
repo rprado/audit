@@ -27,7 +27,7 @@ export class ListaRelatoriosPage {
 
     visualizaRelatorio(item) {
         const base = environment.server_url;
-        window.open(base + 'report/index/' + item.id_avaliacao);
+        window.open(base + 'report/firestore/' + item.id_avaliacao);
     }
 
     enviaRelatorio(item) {
