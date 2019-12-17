@@ -14,7 +14,7 @@ export class DataTransfer extends Firestore<any> {
         private http: HttpClient
     ) {
         super(db);
-        this.tables = ['menu', 'posto'];
+        this.tables = ['avaliacao_nota', 'cliente', 'email', 'item', 'item_posto', 'menu', 'posto'];
     }
 
     download(collection: string) {
@@ -48,9 +48,11 @@ export class DataTransfer extends Firestore<any> {
     }
 
     up() {
-        this.setCollection('avaliacao');
-        this.getData('avaliacao').subscribe(data => {
-            this.upload(data);
+        this.tables.forEach(table => {
+            this.setCollection(table);
+            this.getData(table).subscribe(data => {
+                this.upload(data);
+            });
         });
     }
 }
