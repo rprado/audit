@@ -35,6 +35,7 @@ export class Avaliacao extends Firestore<any> {
             if ( p ) {
                 p.id_avaliacao = av.id;
                 p.data = av.data;
+                p.sent = av.sent;
 
                 const c = cliente.find(x => x.id === p.id_cliente);
                 p.cliente = c.nome;

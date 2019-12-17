@@ -48,4 +48,10 @@ export class ObjectHelper {
     static copy(obj) {
         return JSON.parse(JSON.stringify(obj));
     }
+
+    static encodeObject(jsObject) {
+        return Object.keys(jsObject).map(key => {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(jsObject[key]);
+        }).join('&');
+    }
 }

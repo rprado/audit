@@ -8,6 +8,10 @@ export const environment = {
     server_url: 'https://app.dentalbit.com.br/'
 };
 
+export function api(ctrl, meth) {
+    return environment.server_url + 'api/' + ctrl + 'Rest/' + meth;
+}
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

@@ -1,7 +1,11 @@
-import { environment } from './../../../environments/environment';
+import { NavController } from '@ionic/angular';
+import { OverlayService } from './../../services/overlay.service';
+import { ObjectHelper } from 'src/app/helpers/object-helper';
+import { environment, api } from './../../../environments/environment';
 import { Avaliacao } from './../../shared/dao/avaliacao';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-lista-relatorios',
@@ -12,8 +16,11 @@ export class ListaRelatoriosPage {
     listaAvaliacao;
 
     constructor(
+        private overlay: OverlayService,
         private route: ActivatedRoute,
-        private avaliacao: Avaliacao
+        private avaliacao: Avaliacao,
+        private nav: NavController,
+        private http: HttpClient
     ) { }
 
     ionViewWillEnter() {
@@ -27,11 +34,20 @@ export class ListaRelatoriosPage {
 
     visualizaRelatorio(item) {
         const base = environment.server_url;
-        window.open(base + 'report/firestore/' + item.id_avaliacao);
+        window.open(base + 'report/index/' + item.id_avaliacao);
     }
 
-    enviaRelatorio(item) {
-
+    async enviaRelatorio(item) {
+        const loader = await this.overlay.loading();
+        const data = { id_avaliacao: item.id_avaliacao };
+        this.http.post(api('email', 'enviar'), ObjectHelper.encodeObject(data), {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            observe: 'response'
+        }).subscribe(() => {
+            loader.dismiss();
+            this.nav.navigateForward('home');
+        },
+            err => console.log(err));
     }
 
 }
