@@ -12,8 +12,12 @@ export abstract class Firestore<T extends {id: string}> {
         this.collection = path ? this.db.collection(path, queryFn) : null;
     }
 
-    getAll() {
-        return this.collection.valueChanges();
+    getAll(useId: boolean = false) {
+        if (useId) {
+            return this.collection.valueChanges({ idField: 'id' });
+        } else {
+            return this.collection.valueChanges();
+        }
     }
 
     get(id: string) {
@@ -26,7 +30,7 @@ export abstract class Firestore<T extends {id: string}> {
     }
 
     create(item: T): Promise<T> {
-        item.id = this.db.createId();
+        item.id = item.id ? item.id : this.db.createId();
         return this.setItem(item, 'set');
     }
 

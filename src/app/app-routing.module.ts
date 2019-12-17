@@ -19,6 +19,7 @@ const routes: Routes = [
     { path: 'relatorios', loadChildren: './pages/relatorios/relatorios.module#RelatoriosPageModule' },
     { path: 'lista-visitas', loadChildren: './pages/lista-visitas/lista-visitas.module#ListaVisitasPageModule' },
     { path: 'lista-visitas/:id_cliente', loadChildren: './pages/home/home.module#HomePageModule' },
+    { path: 'helper', loadChildren: './helper/helper.module#HelperPageModule' },
 ];
 
 @NgModule({
