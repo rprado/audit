@@ -13,6 +13,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { Config } from './helpers/config';
 import { SharedModule } from './shared/shared.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [AppComponent],
@@ -26,7 +28,8 @@ import { SharedModule } from './shared/shared.module';
         AngularFireAuthModule,
         AngularFireStorageModule,
         AngularFirestoreModule.enablePersistence(),
-        AngularFireModule.initializeApp(Config.firebaseConfig)
+        AngularFireModule.initializeApp(Config.firebaseConfig),
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
