@@ -9,8 +9,7 @@ import { ListaElementoAvaliacaoComponent } from 'src/app/shared/component/lista-
 })
 export class FormEmailClientePage implements OnInit {
     @ViewChild(ListaElementoAvaliacaoComponent, null) lista: ListaElementoAvaliacaoComponent;
-    form_invalido = false;
-    id_posto;
+    idPosto;
 
     constructor(
         private modal: ModalController,
@@ -18,7 +17,7 @@ export class FormEmailClientePage implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.id_posto = this.navParams.get('id_posto');
+        this.idPosto = this.navParams.get('id_posto');
     }
 
     close() {
@@ -26,7 +25,7 @@ export class FormEmailClientePage implements OnInit {
     }
 
     novoEmail() {
-        this.lista.criar(this.id_posto);
+        this.lista.criar(this.idPosto);
     }
 
 }

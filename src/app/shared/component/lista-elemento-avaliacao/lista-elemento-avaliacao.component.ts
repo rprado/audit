@@ -128,7 +128,7 @@ export class ListaElementoAvaliacaoComponent implements OnInit {
 
     async loadList() {
         const loader = await this.overlay.loading();
-        this.subject.getAll().subscribe(lista => {
+        this.subject.getAll(this.idPosto).subscribe(lista => {
             this.listaElementos = lista;
             this.lista = lista;
             loader.dismiss();

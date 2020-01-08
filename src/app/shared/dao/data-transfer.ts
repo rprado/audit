@@ -17,9 +17,11 @@ export class DataTransfer extends Firestore<any> {
         this.tables = ['avaliacao_nota', 'cliente', 'email', 'item', 'item_posto', 'menu', 'posto'];
     }
 
+    // para usar alguma informação como argumento no getAll
+    // é necessário sobrescrever o método na classe de interesse
     download(collection: string) {
         this.setCollection(collection);
-        this.getAll(true).subscribe(data => {
+        this.getAll().subscribe(data => {
             const s =  JSON.stringify(data);
             console.log(collection + ' - ' + s);
         });

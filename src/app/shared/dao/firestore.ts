@@ -12,12 +12,8 @@ export abstract class Firestore<T extends {id: string}> {
         this.collection = path ? this.db.collection(path, queryFn) : null;
     }
 
-    getAll(useId: boolean = false) {
-        if (useId) {
-            return this.collection.valueChanges({ idField: 'id' });
-        } else {
-            return this.collection.valueChanges();
-        }
+    getAll(id = null) {
+        return this.collection.valueChanges();
     }
 
     get(id: string) {
