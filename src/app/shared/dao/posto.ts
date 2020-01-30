@@ -1,6 +1,7 @@
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Firestore } from './firestore';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -15,12 +16,42 @@ export class Posto extends Firestore<any> {
     }
 
     getByClientId(id: string) {
-        this.setCollection('posto', ref => {
+        return this.db.collection('posto', ref => {
             const aux = ref.where('id_cliente', '==', id);
-            aux.orderBy('nome', 'asc');
-            return aux;
+            return aux.orderBy('nome', 'asc');
+        }).valueChanges();
+    }
+
+    createItem(item, idPosto) {
+        this.db.collection('posto/' + idPosto + '/itens').doc(item.id).set(item);
+    }
+
+    deleteItem(item, idPosto) {
+        this.db.collection('posto/' + idPosto + '/itens').doc(item.id).delete();
+    }
+
+    itemList(idPosto) {
+        const itemObs = this.db.collection('item', ref => ref.orderBy('nome')).valueChanges({idField: 'id'});
+        return new Promise(resolve => {
+            itemObs.subscribe(itemList => {
+                const itemPostoObs = this.db.collection('posto/' + idPosto + '/itens').valueChanges();
+                itemPostoObs.subscribe(itemPostoList => {
+                    const v = itemList.map((item: any) => {
+                        itemPostoList.forEach((itemPosto: any) => {
+                            if (item.id === itemPosto.id) {
+                                item.isChecked = true;
+                            }
+                        });
+                        return item;
+                    });
+                    resolve(v);
+                });
+            });
         });
-        return this.getAll();
+    }
+
+    getItens(idPosto) {
+        return this.db.collection('posto/' + idPosto + '/itens').valueChanges();
     }
 
     listWithClient() {

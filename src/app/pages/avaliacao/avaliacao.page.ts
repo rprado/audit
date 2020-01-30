@@ -4,7 +4,6 @@ import { ArrayHelper } from './../../helpers/array-helper';
 import { Avaliacao } from './../../shared/dao/avaliacao';
 import { Posto } from './../../shared/dao/posto';
 import { Component, OnInit } from '@angular/core';
-import { ItemPosto } from 'src/app/shared/dao/item-posto';
 import { ActivatedRoute } from '@angular/router';
 import { DateHelper } from 'src/app/helpers/date-helper';
 import { FormAvaliacaoPage } from 'src/app/modal/form-avaliacao/form-avaliacao.page';
@@ -28,7 +27,6 @@ export class AvaliacaoPage implements OnInit {
         private avalNota: AvaliacaoNota,
         private modal: ModalController,
         private route: ActivatedRoute,
-        private itemPosto: ItemPosto,
         private nav: NavController,
         private aval: Avaliacao,
         private posto: Posto
@@ -50,7 +48,7 @@ export class AvaliacaoPage implements OnInit {
                 this.elementList = itens;
             });
         } else {
-            this.itemPosto.getById(id).subscribe(itens => {
+            this.posto.getItens(id).subscribe(itens => {
                 this.elementList = itens;
             });
         }
@@ -84,6 +82,7 @@ export class AvaliacaoPage implements OnInit {
 
     salvar() {
         const lista = ArrayHelper.clone(this.elementList);
+        console.log(this.ida);
 
         if (this.ida) {
             this.update(lista);
@@ -104,6 +103,7 @@ export class AvaliacaoPage implements OnInit {
         this.aval.create(aval);
 
         lista.forEach(item => {
+            delete item.id;
             item.id_avaliacao  = aval.id;
             item.observacao    = item.observacao ? item.observacao : '';
             item.recomendacao  = item.recomendacao ? item.recomendacao : '';

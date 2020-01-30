@@ -3,7 +3,6 @@ import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Posto } from 'src/app/shared/dao/posto';
 import { ActivatedRoute } from '@angular/router';
-import { ItemPosto } from 'src/app/shared/dao/item-posto';
 import { ElementoAvaliacaoService } from 'src/app/shared/component/lista-elemento-avaliacao/elemento-avaliacao.service';
 import { Item } from 'src/app/shared/dao/item';
 import { FormCopiaItensPage } from 'src/app/modal/form-copia-itens/form-copia-itens.page';
@@ -25,7 +24,6 @@ export class ItemPostoPage implements OnInit {
     constructor(
         private item: Item,
         private posto: Posto,
-        private itemPosto: ItemPosto,
         private route: ActivatedRoute,
         private modal: ModalController,
         private service: ElementoAvaliacaoService
@@ -63,7 +61,7 @@ export class ItemPostoPage implements OnInit {
     async marcaItensCopiados(obj) {
         if (! obj.data.idPosto) { return; }
 
-        this.itemPosto.getById(obj.data.idPosto).subscribe(itens => {
+        this.posto.getItens(obj.data.idPosto).subscribe(itens => {
             itens.forEach((item: any) => {
                 this.elementList.forEach(element => {
                     if (element.id === item.id_item) {
@@ -75,13 +73,10 @@ export class ItemPostoPage implements OnInit {
     }
 
     setItem(item) {
-        item.id_item = item.id;
-        item.id_posto = this.idPosto;
-
         if (item.isChecked) {
-            this.itemPosto.create(item);
+            this.posto.createItem(item, this.idPosto);
         } else {
-            this.itemPosto.delete(item);
+            this.posto.deleteItem(item, this.idPosto);
         }
     }
 
@@ -105,7 +100,7 @@ export class ItemPostoPage implements OnInit {
     }
 
     private loadList() {
-        this.itemPosto.itemList(this.idPosto).then((itens: any[]) => {
+        this.posto.itemList(this.idPosto).then((itens: any[]) => {
             this.itemList = itens; this.elementList = itens;
             this.itemCount = itens.filter((x: any) => x.isChecked).length;
         });
