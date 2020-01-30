@@ -10,7 +10,7 @@ export class DataTransfer extends Firestore<any> {
     private tables;
 
     constructor(
-        db: AngularFirestore,
+        protected db: AngularFirestore,
         private http: HttpClient
     ) {
         super(db);
