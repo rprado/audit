@@ -13,7 +13,7 @@
 
     <ion-list>
         <div *ngFor="let element of elementList; let i = index">
-            <ion-item>
+            <ion-item (click)="validate()">
                 <ion-label>
                     <h3>{{i + 1 | number: '2.0-0'}}. {{element.nome}}{{element.nota ? ': '+element.nota : ''}}</h3>
                     <ion-range min=0 max=4 snaps=true pin=true [(ngModel)]="element.nota"></ion-range>
@@ -23,7 +23,7 @@
         </div>
     </ion-list>
 
-    <ion-button expand="full" color="primary" (click)="salvar()">Salvar Avaliação ({{elementList.length}})</ion-button>
+    <ion-button expand="full" color="primary" [disabled]="! listaValida" (click)="salvar()">Salvar Avaliação ({{elementList.length}})</ion-button>
 
     <copyright-footer></copyright-footer>
 </ion-content>

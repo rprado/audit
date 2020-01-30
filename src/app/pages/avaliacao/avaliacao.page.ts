@@ -16,6 +16,7 @@ import { FormAvaliacaoPage } from 'src/app/modal/form-avaliacao/form-avaliacao.p
 export class AvaliacaoPage implements OnInit {
     selectedElement;
     elementList = [];
+    listaValida;
     nomePosto;
     contato;
     media;
@@ -82,7 +83,6 @@ export class AvaliacaoPage implements OnInit {
 
     salvar() {
         const lista = ArrayHelper.clone(this.elementList);
-        console.log(this.ida);
 
         if (this.ida) {
             this.update(lista);
@@ -111,6 +111,14 @@ export class AvaliacaoPage implements OnInit {
             this.avalNota.create(item);
         });
         this.nav.navigateForward('home');
+    }
+
+    validate() {
+        let cont = 0;
+        this.elementList.forEach(item => {
+            cont += item.nota > 0 ? 1 : 0;
+        });
+        this.listaValida = this.elementList.length === cont;
     }
 
     randGrades() {
