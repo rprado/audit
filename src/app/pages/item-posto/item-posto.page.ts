@@ -61,11 +61,11 @@ export class ItemPostoPage implements OnInit {
     async marcaItensCopiados(obj) {
         if (! obj.data.idPosto) { return; }
 
-        this.posto.getItens(obj.data.idPosto).subscribe(itens => {
+        this.item.getAll().subscribe(itens => {
             itens.forEach((item: any) => {
                 this.elementList.forEach(element => {
-                    if (element.id === item.id_item) {
-                        element.isChecked = true;
+                    if (element.id === item.id && element.isChecked) {
+                        this.posto.createItem(element, obj.data.idPosto);
                     }
                 });
             });
