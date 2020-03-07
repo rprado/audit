@@ -5,7 +5,7 @@
 export const environment = {
     test: false,
     production: false,
-    server_url: 'https://app.dentalbit.com.br/'
+    server_url: 'http://localhost/trycom/consulimp/'
 };
 
 export function api(ctrl, meth) {

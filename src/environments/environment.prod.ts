@@ -1,7 +1,7 @@
 export const environment = {
     test: false,
     production: true,
-    server_url: 'https://app.dentalbit.com.br/'
+    server_url: 'http://trycom.com.br/'
 };
 
 export function api(ctrl, meth) {
