@@ -14,4 +14,9 @@ export class Cliente extends Firestore<any> {
         this.setCollection('cliente', ref => ref.orderBy('nome', 'asc'));
     }
 
+    delete(item) {
+        item.ativo = 0;
+        return this.update(item);
+    }
+
 }

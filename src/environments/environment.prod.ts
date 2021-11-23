@@ -1,7 +1,7 @@
 export const environment = {
     test: false,
     production: true,
-    server_url: 'http://trycom.com.br/'
+    server_url: 'http://trycom.com.br/consulimp/'
 };
 
 export function api(ctrl, meth) {

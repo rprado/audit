@@ -7,11 +7,13 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./copyright-footer.component.scss'],
 })
 export class CopyrightFooterComponent {
-
     version: string;
+    year: number;
 
     constructor() {
         this.version = VersionHelper.getLast();
+        const date = new Date();
+        this.year = date.getFullYear();
     }
 
 }

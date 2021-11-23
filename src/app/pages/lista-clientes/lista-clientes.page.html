@@ -5,7 +5,8 @@
 <ion-content class="ion-padding">
     <lista-elemento-avaliacao 
         icon = "contact" 
-        header = "Ativos"
+        header = "Ativos" 
+        status = 1 
         elemento = "cliente" 
         useSearchBar = "true"
         (itemClicked) = "exibePosto($event)">
@@ -15,7 +16,7 @@
         icon = "contact" 
         header = "Inativos"
         elemento = "cliente" 
-        onlyDeleted = "true" 
+        status = 0  
         (itemClicked) = "habilita($event)">
     </lista-elemento-avaliacao> -->
 

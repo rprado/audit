@@ -31,7 +31,7 @@ export class Posto extends Firestore<any> {
     }
 
     itemList(idPosto) {
-        const itemObs = this.db.collection('item', ref => ref.orderBy('nome')).valueChanges({idField: 'id'});
+        const itemObs = this.db.collection('item', ref => ref.orderBy('nome')).valueChanges({ idField: 'id' });
         return new Promise(resolve => {
             itemObs.subscribe(itemList => {
                 const itemPostoObs = this.db.collection('posto/' + idPosto + '/itens').valueChanges();
@@ -51,24 +51,39 @@ export class Posto extends Firestore<any> {
     }
 
     getItens(idPosto) {
-        return this.db.collection('posto/' + idPosto + '/itens').valueChanges();
+        return this.db.collection('posto/' + idPosto + '/itens', ref => ref.orderBy('nome', 'asc')).valueChanges();
     }
 
-    listWithClient() {
+    listWithClient(status = null) {
         const postos = this.db.collection('posto', ref => ref.orderBy('nome', 'asc')).valueChanges();
 
         return new Promise(resolve => {
             postos.subscribe(pst => {
-                const clientes = this.db.collection('cliente').valueChanges();
+                let clientes = null;
+
+                if (status) {
+                    clientes = this.db.collection('cliente', ref => ref.where('ativo', '==', status)).valueChanges();
+                } else {
+                    clientes = this.db.collection('cliente').valueChanges();
+                }
+
                 clientes.subscribe(cli => {
-                    const v = pst.map((item: any) => {
-                        cli.forEach((elem: any) => {
-                            if (item.id_cliente === elem.id) {
-                                item.cli = elem.nome;
+                    const v = [];
+
+                    // tslint:disable-next-line:prefer-for-of
+                    for (let i = 0; i < cli.length; i++) {
+                        const cliente = cli[i];
+
+                        // tslint:disable-next-line:prefer-for-of
+                        for (let j = 0; j < pst.length; j++) {
+                            const posto: any = pst[j];
+
+                            if (posto.id_cliente === cliente.id) {
+                                posto.cli = cliente.nome;
+                                v.push(posto);
                             }
-                        });
-                        return item;
-                    });
+                        }
+                    }
                     v.sort(this.compare);
                     resolve(this.groupByClient(v));
                 });

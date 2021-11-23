@@ -22,4 +22,9 @@ export class AvaliacaoNota extends Firestore<any> {
         return this.db.collection('avaliacao_nota', ref =>
         ref.where('id_avaliacao', '==', ida).orderBy('nome')).valueChanges();
     }
+
+    erase() {
+        return this.db.collection('avaliacao_nota', ref =>
+        ref.where('id_avaliacao', '==', 'QgqY6CcibUWaElE4qYCX')).valueChanges();
+    }
 }

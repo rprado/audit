@@ -3,6 +3,7 @@ import { AngularFirestoreCollection, AngularFirestore, QueryFn } from '@angular/
 export abstract class Firestore<T extends {id: string}> {
 
     protected collection: AngularFirestoreCollection;
+    path = '';
 
     constructor(
         protected db: AngularFirestore
@@ -10,10 +11,15 @@ export abstract class Firestore<T extends {id: string}> {
 
     protected setCollection(path: string, queryFn?: QueryFn) {
         this.collection = path ? this.db.collection(path, queryFn) : null;
+        this.path = path;
     }
 
-    getAll(id = null) {
-        return this.collection.valueChanges();
+    getAll(id = null, status = null) {
+        if (status) {
+            return this.db.collection(this.path, ref => ref.where('ativo', '==', 1)).valueChanges();
+        } else {
+            return this.collection.valueChanges();
+        }
     }
 
     get(id: string) {

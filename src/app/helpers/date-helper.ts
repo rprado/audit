@@ -27,9 +27,9 @@ export class DateHelper {
     }
 
     /**
- * Converte a data d para o formato aaaa-mm-dd
- * @param d: string data em dd/mm/aa
- */
+     * Converte a data d para o formato aaaa-mm-dd
+     * @param d: string data em dd/mm/aa
+     */
     static dataToDate(d, short) {
         const prefix = short === 1 ? '20' : '';
         return prefix + d.split('/').reverse().join('-');

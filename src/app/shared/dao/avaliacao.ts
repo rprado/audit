@@ -38,11 +38,18 @@ export class Avaliacao extends Firestore<any> {
                 p.sent = av.sent;
 
                 const c = cliente.find(x => x.id === p.id_cliente);
-                p.cliente = c.nome;
-                data.push(ObjectHelper.copy(p));
+                if ( c ) {
+                    p.cliente = c.nome;
+                    data.push(ObjectHelper.copy(p));
+                }
             }
         });
+        console.log(data);
         return data;
     }
 
+    erase() {
+        return this.db.collection('avaliacao', ref =>
+        ref.where('data', '<', '2020-02-19')).valueChanges();
+    }
 }

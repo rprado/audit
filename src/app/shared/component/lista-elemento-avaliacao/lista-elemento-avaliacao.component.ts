@@ -17,11 +17,11 @@ import { OverlayService } from 'src/app/services/overlay.service';
 })
 export class ListaElementoAvaliacaoComponent implements OnInit {
     @Input() icon: string;
+    @Input() status = null;
     @Input() header: string;
     @Input() idPosto: number;
     @Input() elemento: string;
     @Input() campoExtra: string;
-    @Input() onlyDeleted = false;
     @Input() useSearchBar = false;
     @Output() itemClicked;
 
@@ -67,6 +67,7 @@ export class ListaElementoAvaliacaoComponent implements OnInit {
         if (this.idPosto) {
             data.id_posto = this.idPosto;
         }
+        data.ativo = 1;
         this.subject.create(data).then(() => loader.dismiss());
     }
 
@@ -128,7 +129,7 @@ export class ListaElementoAvaliacaoComponent implements OnInit {
 
     async loadList() {
         const loader = await this.overlay.loading();
-        this.subject.getAll(this.idPosto).subscribe(lista => {
+        this.subject.getAll(this.idPosto, this.status).subscribe(lista => {
             this.listaElementos = lista;
             this.lista = lista;
             loader.dismiss();

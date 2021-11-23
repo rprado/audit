@@ -20,6 +20,7 @@ const routes: Routes = [
     { path: 'lista-visitas', loadChildren: './pages/lista-visitas/lista-visitas.module#ListaVisitasPageModule' },
     { path: 'lista-visitas/:id_cliente', loadChildren: './pages/home/home.module#HomePageModule' },
     { path: 'helper', loadChildren: './helper/helper.module#HelperPageModule' },
+  { path: 'eraser', loadChildren: './pages/eraser/eraser.module#EraserPageModule' },
 ];
 
 @NgModule({
